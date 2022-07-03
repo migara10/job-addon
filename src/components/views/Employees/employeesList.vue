@@ -178,8 +178,8 @@ export default {
         .then(() => {
           getAllEmployees()
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((errs) => {
+          console.log(errs);
         });
     };
     const addUser = user => {
@@ -191,8 +191,8 @@ export default {
         .then(() => {
           getAllEmployees()
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((errs) => {
+          console.log(errs);
         });
     };
 
