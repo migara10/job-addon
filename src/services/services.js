@@ -1,6 +1,6 @@
 const servicess = {
     logOut() {
-        localStorage.removeItem('token')
+        localStorage.removeItem('accessToken')
     }
 }
 

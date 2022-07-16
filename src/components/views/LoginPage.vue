@@ -75,7 +75,8 @@ export default {
         .post("auth/login", queryParams)
         .then((res) => {
           isLoading.value = false;
-          localStorage.setItem("token", res.data);
+          localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("refreshToken", res.data.refreshToken);
           router.push({name: "job"});
         })
         .catch(() => {

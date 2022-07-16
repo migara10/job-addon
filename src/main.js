@@ -21,7 +21,8 @@ import "vue-toastification/dist/index.css";
 
 
 
-axios.defaults.baseURL = "http://localhost:3000/"
+// axios.defaults.baseURL = "https://cicdtutorial10.herokuapp.com/"
+// axios.defaults.baseURL = "http://localhost:5000"
 // let token = localStorage.getItem('token')
 /* axios.interceptors.request.use(
     function (config) {
@@ -32,24 +33,71 @@ axios.defaults.baseURL = "http://localhost:3000/"
         return Promise.reject(error);
     }
 ) */
-axios.interceptors.request.use(
+/* axios.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('token')
-      if (token) {
-        config.headers.common.authorization= `Bearer ${token}`
+        const accessToken = localStorage.getItem('accessToken')
+        const refreshToken = localStorage.getItem('refreshToken')
+      if (accessToken) {
+        config.headers.common.authorization= `Bearer ${accessToken}`
       }
       return config
     },
     error => Promise.reject(error),
   )
 axios.interceptors.response.use(
-    function (response) {
-        return response;
-    },
-    function (error) {
-        return Promise.reject(error);
+    (response => response),
+    (error => Promise.reject(error))
+) */
+
+
+
+axios.defaults.baseURL = "http://localhost:5000"
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.authorization= `Bearer ${token}`; // for Node.js Express back-end
     }
-)
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (err) => {
+    const originalConfig = err.config;
+    if (err.response.status === 403 && !originalConfig._retry) {
+      originalConfig._retry = true;
+      try {
+        const rs = await axios.post("/auth/token", {
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        const { accessToken } = rs.data;
+        localStorage.setItem("accessToken", accessToken);
+        return axios(originalConfig);
+      } catch (_error) {
+        localStorage.clear()
+        return Promise.reject(_error);
+      }
+    }
+    if (err.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true;
+      localStorage.clear()
+      router.push({name: "login"});
+    }
+  }
+);
+
+
+
+
+
+
 const app = createApp(App)
 const options = {
     // You can set your default options here

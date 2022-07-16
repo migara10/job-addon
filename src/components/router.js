@@ -5,7 +5,7 @@ import Home from './views/HomePage'
 import Job_id from './views/Employees/setupList' */
 
 const isUserLoggedIn = () => {
-    return !!localStorage.getItem('token')
+    return !!localStorage.getItem('accessToken')
 }
 
 
