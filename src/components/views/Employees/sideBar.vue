@@ -137,7 +137,6 @@ export default {
           hide();
         })
         .catch((err) => {
-          console.log(err.response.data.msg, "error");
           toast.error(err.response.data.msg, {
             timeout: 2000,
           });

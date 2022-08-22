@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import servicess from "./services/services";
 import { useRouter } from "vue-router";
 import jwt_decode from "jwt-decode";
 import { ref, onBeforeMount } from "vue";
@@ -53,9 +52,10 @@ export default {
     const loggedUser = ref("");
 
     const logOut = () => {
-      servicess.logOut();
+      localStorage.removeItem('accessToken')
       router.replace("/login").then(() => {});
       loggedUser.value = "";
+      localStorage.clear();
     };
 
     const getUserDetails = () => {
@@ -79,7 +79,6 @@ export default {
     });
     return {
       logOut,
-      servicess,
       getUserDetails,
       loggedUser,
     };

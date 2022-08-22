@@ -33,6 +33,7 @@
             style="width: 60%"
             v-model="searchVal"
             v-debounce:300ms="getAllEmployees"
+            autocomplete="false"
             @click="clickSearch"
           />
           <button class="btn btn-primary" @click="childComponent.show()">
@@ -178,8 +179,8 @@ export default {
         .then(() => {
           getAllEmployees()
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((errs) => {
+          console.log(errs);
         });
     };
     const addUser = user => {
@@ -191,8 +192,8 @@ export default {
         .then(() => {
           getAllEmployees()
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((errs) => {
+          console.log(errs);
         });
     };
 

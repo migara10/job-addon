@@ -5,7 +5,7 @@ import Home from './views/HomePage'
 import Job_id from './views/Employees/setupList' */
 
 const isUserLoggedIn = () => {
-    return !!localStorage.getItem('token')
+    return !!localStorage.getItem('accessToken')
 }
 
 
@@ -22,6 +22,15 @@ const routes = [
         meta: {
             hideNavbar: true,
         }
+    },
+    {
+        path: '/signin',
+        name: 'signin',
+        component: () => import("./views/SigninPage.vue"),
+        meta: {
+            hideNavbar: true,
+        }
+
     },
     {
         path: '/employee',
@@ -41,7 +50,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'login' && !isUserLoggedIn()) next({ name: 'login' })
+    if (((to.name !== 'login') && (to.name !== 'signin') )&& !isUserLoggedIn()) next({ name: 'login' })
     else next()
 })
 
