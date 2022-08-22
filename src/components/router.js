@@ -24,6 +24,15 @@ const routes = [
         }
     },
     {
+        path: '/signin',
+        name: 'signin',
+        component: () => import("./views/SigninPage.vue"),
+        meta: {
+            hideNavbar: true,
+        }
+
+    },
+    {
         path: '/employee',
         name: 'employee',
         component: () => import("./views/Employees/employeesList"),
@@ -41,7 +50,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'login' && !isUserLoggedIn()) next({ name: 'login' })
+    if (((to.name !== 'login') && (to.name !== 'signin') )&& !isUserLoggedIn()) next({ name: 'login' })
     else next()
 })
 

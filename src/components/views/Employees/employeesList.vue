@@ -33,6 +33,7 @@
             style="width: 60%"
             v-model="searchVal"
             v-debounce:300ms="getAllEmployees"
+            autocomplete="false"
             @click="clickSearch"
           />
           <button class="btn btn-primary" @click="childComponent.show()">
